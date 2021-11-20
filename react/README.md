@@ -9,7 +9,7 @@ Aprendido del curso https://www.udemy.com/course/react-cero-experto/
 * [Clonar objetos](#Clonar-objetos)
 * [Exportaciones](#Exportaciones)
 * [Peticiones fetch](#Peticiones-fetch)
-* [Async y await](#Aync-y-await)
+* [Async y await](#Async-y-await)
 ### Template string
 Template string sirve para poder escribir en muchas lineas sin tener que hacer '' + ''(en la siguiente liena) 
 tambien ayuda a la hora de poner variables de javascript ya que se ponene solo usando {variable}, puede que no se muri muy util pero puede ahorar tiempo 
