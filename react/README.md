@@ -8,6 +8,7 @@ Aprendido del curso https://www.udemy.com/course/react-cero-experto/
 * [Desestrucutacion](#Desestructuracion)
 * [Clonar objetos](#Clonar-objetos)
 * [Exportaciones](#Exportaciones)
+* [Promesas](#Promesas)
 * [Peticiones fetch](#Peticiones-fetch)
 * [Async y await](#Async-y-await)
 ### Template string
