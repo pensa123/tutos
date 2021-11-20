@@ -1,6 +1,9 @@
 # ReactJS 
 Aprendido del curso https://www.udemy.com/course/react-cero-experto/
 
+* [Repaso de javascript](#Repaso-de-javascript)
+* [Iniciando con react](#Iniciando-con-react)
+
 
 ## Repaso de javascript 
 * Ya no se debe de usar var, solo let o cons 
@@ -156,4 +159,36 @@ peticion.then(  resp => resp.json() )
         console.error(error);
     }
 };
+```
+
+## Iniciando con react
+* [Hola mundo](#Hola-mundi)
+
+### Hola mundo 
+* react utiliza jsx y es recomendado utilizarlo con babel para que sea mas facil 
+* jsx nos permite utilizar etiquetas de html en el codigo de react como `h1Tag = <h1> Hola soy {nombre}</h1>`
+* babel nos ayuda a pasar javascritp mas reciente a javascript mas bajo y que pueda ser usado en varios navegadores como por ejempo 
+   * \`${algo} {algo2}\` =>   algo + " " + algo2 
+
+```r
+  <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <!-- Cargat React -->
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <title>Curso de React</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        var nombre = 'Goku'; 
+        const h1Tag = <h1>Hola soy {nombre}</h1>;
+        const divRoot = document.querySelector('#root');
+        ReactDOM.render(h1Tag, divRoot);
+    </script>
+</body>
+</html>
 ```
