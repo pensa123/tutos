@@ -163,6 +163,7 @@ peticion.then(  resp => resp.json() )
 
 ## Iniciando con react
 * [Hola mundo](#Hola-mundi)
+* [Prototypes](#prototypes)
 
 ### Hola mundo 
 * react utiliza jsx y es recomendado utilizarlo con babel para que sea mas facil 
@@ -192,3 +193,71 @@ peticion.then(  resp => resp.json() )
 </body>
 </html>
 ```
+
+## Prototypes 
+Si estas usando visual studio code la forma mas facil es usando rafcp y te crea el esqueleto del prototype 
+
+```r
+  import React, {useState} from 'react'
+import PropTypes from 'prop-types';
+
+const CounterApp = ( {value = 0} ) => {
+    //handeAdd
+    const handelAdd = (e) => {
+        setCounter(counter + 1);   
+    }
+    const handelDecrese = (e) => {
+        setCounter(counter - 1); 
+    }
+    const [counter, setCounter] = useState(value); 
+
+    return <> 
+        <h1>CounterApp</h1>
+        <h2> { counter } </h2>
+        <button onClick={  handelAdd }> +1 </button>
+        <button onClick={ () => {setCounter(value)}}> Reset </button>
+        <button onClick={ handelDecrese}> -1 </button>
+    </>; 
+}
+
+CounterApp.propTypes = {
+    value : PropTypes.number.isRequired
+}
+
+export default CounterApp; 
+// rafcp  shortcut to create a prototype 
+```
+
+Y desde el index.js se manda a llamar de la siguiente manera. 
+
+```r
+import React from 'react'; 
+import ReactDOM from 'react-dom';
+import CounterApp from './CounterApp';
+import './index.css';
+
+const divRoot = document.querySelector('#root'); 
+
+ReactDOM.render( <CounterApp value={15} /> , divRoot); 
+```
+
+## Pruebas en react 
+Se puede poner un describe para almacenar varias pruebas 
+y para cada prueba se usa un test un ejemplo es el siguiente. 
+
+
+```r
+describe('Pruebas del archivo demo.test.js', () => {   
+    test('String iguales', () => {
+        // 1 inicializacion 
+        const mensaje = 'Hola Mundo'; 
+        
+        //2 
+        const mens2 = `Hola Mundo`; 
+        
+        expect( mensaje).toBe(mens2); 
+    })
+})
+```
+
+
