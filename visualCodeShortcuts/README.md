@@ -2,6 +2,8 @@
 
 ## Shortcuts 
 
+|Shortcut | Result | 
+|----|----|
 |ctrl ks|show you all the shotcuts you have|
 |View toggle word wrap ( i change this to ctrl li ) but you can search in the list of shortcuts and watch the original shortcut or change it to ctrl li :D|  
 |Ctrl + space |if you close the autocomplete or this don't appear with ctrl + space you can list the autocmplete |
@@ -15,10 +17,14 @@
 ## Auto complete 
 
 ### HTML 
+|Shortcut | Result | 
+|----|----|
 | ! | Generate the <!doctype> <head> </head> <body> ..... |
 
 
 ### REACT 
+|Shortcut | Result | 
+|----|----|
 | impr | importa react |
 | rafcp | Create a prototype | 
  
