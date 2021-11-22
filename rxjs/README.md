@@ -34,3 +34,30 @@ Este resumen lo saque del siguiente curso https://www.udemy.com/course/rxjs-de-c
    * Tienen funciones expecificas que no mutan informacion 
 
 
+## Proyecto base 
+https://github.com/Klerith/curso-rxjs-inicio 
+
+## Observables 
+Se recomienda ponerle un $ al final para hacer saber que es un observable 
+
+Ejemplo basico 
+```r
+import { Observable } from 'rxjs';
+
+const obs$ = new Observable(subs => {
+
+    subs.next('Hola'); 
+    subs.next('Mundo'); 
+    
+
+    subs.next('Hola'); 
+    subs.next('Mundo'); 
+
+    subs.complete(); //no mostrara los valores de abajo ↓
+
+    subs.next('no sale');
+});
+
+obs$.subscribe(console.log);  
+```
+
