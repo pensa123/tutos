@@ -250,7 +250,7 @@ In the video him create an easy example about to add, update and remove bugs.
 In the course him use the redux 4.0 so i use the same 
 `npm i redux@4.0`
 
-* Design the store 
+#### Design the store 
 The store is a js file 
 and because the store starts out as an empty array I think the easiest way to have a better order is to add a comment about how will the store be.
 ```r
