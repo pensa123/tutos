@@ -1,5 +1,8 @@
 # Redux 
 The following summary was about this video https://www.youtube.com/watch?v=poQXNp9ItL4 
+
+In this link you can download the base of the project https://programmingwithmosh.com/redux-starter/  
+
 * Redux is inspire in flux 
 * Another popular solution is mux 
 * In redux you have to obtain the data from a store to get sincronize the entire application 
