@@ -81,14 +81,14 @@ const obs$ = new Observable<string>(subs => {
     subs.next('Mundo'); 
 
     // const a = undefined; 
-    // a= 'hola';           //Es un erro forzado para ver que si muestra el error del suscribe. 
+    // a= 'hola';           //Es un error forzado para ver que si muestra el error del suscribe. 
     subs.complete(); 
 
     subs.next('no sale');
 });
 
 /*
-Con esto si funciona pero esta depreciado 
+Con esto si funciona pero esta depreciado y es el que enseñaron en el video 
 obs$.subscribe(
     valor => console.log('Next', valor), 
     error => console.warn('Error' , error), 
@@ -96,6 +96,7 @@ obs$.subscribe(
 );
 */
 
+//Este si es el bueno 
 obs$.subscribe(
     {
         complete: () => console.log('Completado'), 
@@ -104,4 +105,144 @@ obs$.subscribe(
     }
 );
 ```
+
+
+ ## Suscribe y unsuscribe 
+ 
+ ```r
+ import { Observable, Observer } from 'rxjs';
+
+const observer: Observer<any> = {
+    complete: () => console.log('Completado'),
+    error: err => console.warn('Error', err),
+    next: next => console.log('Next', next)
+}
+
+const intervalo$ = new Observable<number>(subs => {
+
+    let cont = 0;
+    setInterval(() => {
+        subs.next(++cont);
+        console.log(cont);
+    }, 1000)
+});
+var sub1 = intervalo$.subscribe(num => console.log('Num: ', num));
+
+setTimeout(() => {
+    sub1.unsubscribe();
+}, 3000);
+ ```
+ 
+El problema con unsuscribe es que solo deja de escuchar pero el interval que esta dentro de intervalo$ seguira funcionando mientras este activo 
+y eso puede gastar mucha memoria (si hubieran muchos claro) 
+
+esto se soluciona de la siguiente forma
+
+```r
+import { Observable, Observer } from 'rxjs';
+
+const observer: Observer<any> = {
+    complete: () => console.log('Completado'),
+    error: err => console.warn('Error', err),
+    next: next => console.log('Next', next)
+}
+
+const intervalo$ = new Observable<number>(subs => {
+
+    let cont = 0;
+    const interval = setInterval(() => {
+        subs.next(++cont);
+        console.log(cont);
+    }, 1000)
+
+    return () => {
+        clearInterval(interval); 
+        console.log("mantando al intervalo."); 
+    }
+});
+var sub1 = intervalo$.subscribe(num => console.log('Num: ', num));
+
+setTimeout(() => {
+    sub1.unsubscribe();
+}, 3000);
+```
+
+aunque ahora hay observables que hacen eso por ti es importante saber esta base ;) //o eso dijo el del video :D 
+
+
+```r
+import { Observable, Observer } from 'rxjs';
+
+const observer: Observer<any> = {
+    complete: () => console.log('Completado'),
+    error: err => console.warn('Error', err),
+    next: next => console.log('Next', next)
+}
+
+const intervalo$ = new Observable<number>(subs => {
+
+    let cont = 0;
+    const interval = setInterval(() => {
+        subs.next(++cont);
+        console.log(cont);
+    }, 1000);
+
+    setInterval(() => {
+        subs.complete();
+    }, 2500);
+
+    return () => {
+        clearInterval(interval);
+        console.log("mantando al intervalo.");
+    }
+});
+var sub1 = intervalo$.subscribe( observer );
+
+setTimeout(() => {
+    console.log('me desinscribi')
+    sub1.unsubscribe();
+}, 3000);
+```
+si se llama de esta manera primero se suscribe, manda el 1 , 2 , luego dicec completado, luego mantando al intervalo y de ultimo el me desinscribi 
+por que al completarse primero se ejecuta la funcion que le mandamos de complete al observable y luego el return y si alguien se desinscribe no hacemos nada 
+
+ahora miraremos como hacer que los observadores esten juntos y terminen a la vez 
+
+```r
+...
+var sub1 = intervalo$.subscribe(observer);
+var sub2 = intervalo$.subscribe(observer);
+var sub3 = intervalo$.subscribe(observer);
+
+sub1.add(sub2);
+sub2.add(sub3);
+
+setTimeout(() => {
+    console.log('me desinscribi')
+    sub1.unsubscribe();
+}, 3000);
+```
+
+cuando se termina el sub1 se terminan tambien los otros dos subs 
+
+## Agregando subject para tener mismos resultados 
+```r
+/* lo que estaba antes xd :D */
+const subject$ = new Subject();
+const intervalSubject = intervalo$.subscribe(subject$);
+
+const sub1 = subject$.subscribe(x => console.log("sub1", x));
+const sub2 = subject$.subscribe(x => console.log("sub2", x));
+
+//Debido a que el subject tambien es un observable se le puede agregar 
+setTimeout(() => {
+    subject$.next(10); 
+    subject$.complete(); 
+    intervalSubject.unsubscribe(); 
+}, 3000);
+```
+intervalo es conocido como un cold observable por que la data es producida adentro de si mismo 
+
+subject es conocido como un hot observable por que la data es producida afuera de si mismo 
+
 
