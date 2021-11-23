@@ -245,4 +245,43 @@ intervalo es conocido como un cold observable por que la data es producida adent
 
 subject es conocido como un hot observable por que la data es producida afuera de si mismo 
 
+## Observable OF 
+Este procesa los datos en sequencia. y este no es asyncrono 
+
+```r
+import { of } from 'rxjs';
+
+const obs$ = of(1,2,3,4,5,6);
+
+console.log('inicio del observable');
+//Este observable es sincrono :D 
+obs$.subscribe({
+    next: next => console.log('next', next),
+    complete: () => console.log('secuencia terminada')
+})
+console.log('fin del observable');
+```
+
+## FromEvent 
+
+```r
+	import { fromEvent } from 'rxjs'
+/* Eventos del dump */
+
+const src1$ = fromEvent<PointerEvent>(document, 'click');
+const src2$ = fromEvent<KeyboardEvent>(document, 'keyup');
+
+const obs = {
+    next: val => console.log('next', val)
+}
+
+
+src1$.subscribe(({ x, y }) => console.log(x, y));
+src2$.subscribe(even => console.log(even.key));
+```
+
+cuando no sabes cual es el nombre de un evento puedes dejarlo sin especificar, imprmirlo como tal y copiar 
+![image](https://user-images.githubusercontent.com/36494183/143140582-8237d197-f029-4339-91a1-ca90a5c24a54.png)
+el event que nos tira
+
 
