@@ -259,5 +259,108 @@ describe('Pruebas del archivo demo.test.js', () => {
     })
 })
 ```
+## Utilizando import por defecto en todos los .test.js
+Para realizar pruebas se puede crear un archivo llamado `setupTest.js` y en ese se ponen los imports que necesitamos. 
+
+```r
+import '@testing-library/jest-dom/extend-expect';
+
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import {createSerializer} from 'enzyme-to-json';
+
+Enzyme.configure({ adapter: new Adapter() });
+
+
+expect.addSnapshotSerializer(createSerializer({mode: 'deep'}));
+```
+
+Para esta parte vamos a utilizar enzyme 
+para esto es necesario instalar unos paquetes 
+
+
+* npm install --save-dev @wojtekmaj/enzyme-adapter-react-17
+* npm i --save-dev enzyme enzyme-adapter-react-16
+* npm install --save-dev enzyme-to-json
+
+
+# Pruebas con las vistas 
+
+Veremos lo que son snapshots y 
+```r
+   test('should render', () => {
+        const saludo = "hola";   
+        const wrap = render(<PrimeraApp saludo={ saludo }  />)       //con u se guarda el snapchot 
+
+        expect( wrap).toMatchSnapshot();
+    })
+```
+
+este guarda un snapchot de la pagina como esta en el momento de crear la prueba, despues de darle npm run test se pueden notar si hicieron algun cambio que cambiara la vista del html que genera, y nos indicara que se cambio, si queremos dejar los nuevos cambios escribimos la tecla "U" 
+
+```r
+import React from 'react';
+import { shallow} from "enzyme";
+import {render} from '@testing-library/react'
+import '@testing-library/jest-dom';
+import CounterApp from '../CounterApp';
+
+
+describe('Prueba en <Counter app />', () => {
+
+    const wrap = render(<CounterApp value={0}  />)       //con u se guarda el snapchot 
+    let wrapSH = shallow(<CounterApp value={10}  />)       //con u se guarda el snapchot 
+    let valor = 10; 
+
+    beforeEach(() => {
+        // configurar un elemento del DOM como objetivo del renderizado
+        wrapSH = shallow(<CounterApp value={valor}  />);
+      });
+
+    test('should render', () => {
+        expect( wrap).toMatchSnapshot();
+    })
+    
+    test('should show the subtitle', () => {
+        const valor = 100;
+        const wrap2 = shallow(<CounterApp value={valor}  />)       //con u se guarda el snapchot 
+        const textoParrafo = wrap2.find('h2').text().trim(); 
+        expect( textoParrafo ).toBe( `${valor}` ); 
+
+    })
+    
+    test('should increse 1', () => {
+        const btn = wrapSH.find('button').at(0); 
+        console.log(btn.html); 
+        btn.simulate('click'); 
+        const textoParrafo = wrapSH.find('h2').text().trim(); 
+        expect( textoParrafo ).toBe( `${valor + 1}` ); 
+    })
+
+    test('should decrese 1', () => {
+        wrapSH.find('button').at(2).simulate('click'); 
+        const textoParrafo = wrapSH.find('h2').text().trim(); 
+        expect( textoParrafo ).toBe( `${valor - 1}` ); 
+    })
+
+
+    test('should reset to 10', () => {
+       
+       wrapSH.find('button').at(0).simulate('click'); 
+       wrapSH.find('button').at(0).simulate('click'); 
+       wrapSH.find('button').at(0).simulate('click'); 
+       wrapSH.find('button').at(0).simulate('click'); 
+       wrapSH.find('button').at(0).simulate('click'); 
+       wrapSH.find('button').at(0).simulate('click'); 
+       wrapSH.find('button').at(0).simulate('click'); 
+       let textoParrafo = wrapSH.find('h2').text().trim(); 
+       wrapSH.find('button').at(1).simulate('click'); 
+       console.log(textoParrafo); 
+       textoParrafo = wrapSH.find('h2').text().trim(); 
+        console.log(textoParrafo); 
+        expect( textoParrafo ).toBe( `${valor}`)
+    })    
+})
+```
 
 
