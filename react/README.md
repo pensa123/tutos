@@ -299,6 +299,17 @@ Veremos lo que son snapshots y
 este guarda un snapchot de la pagina como esta en el momento de crear la prueba, despues de darle npm run test se pueden notar si hicieron algun cambio que cambiara la vista del html que genera, y nos indicara que se cambio, si queremos dejar los nuevos cambios escribimos la tecla "U" 
 
 ```r
+    return <> 
+        <h1>CounterApp</h1>
+        <h2> { counter } </h2>
+        <button onClick={  handelAdd }> +1 </button>
+        <button onClick={ () => {setCounter(value)}}> Reset </button>
+        <button onClick={ handelDecrese}> -1 </button>
+    </>; 
+```
+esto es lo que devuelve CounterApp 
+
+```r
 import React from 'react';
 import { shallow} from "enzyme";
 import {render} from '@testing-library/react'
@@ -330,7 +341,7 @@ describe('Prueba en <Counter app />', () => {
     })
     
     test('should increse 1', () => {
-        const btn = wrapSH.find('button').at(0); 
+        const btn = wrapSH.find('button').at(0); // se obtiene el 0 por que en este componente hay 3 botones y ese es el primero 
         console.log(btn.html); 
         btn.simulate('click'); 
         const textoParrafo = wrapSH.find('h2').text().trim(); 
@@ -338,7 +349,7 @@ describe('Prueba en <Counter app />', () => {
     })
 
     test('should decrese 1', () => {
-        wrapSH.find('button').at(2).simulate('click'); 
+        wrapSH.find('button').at(2).simulate('click'); //el 3er boton es el -1 
         const textoParrafo = wrapSH.find('h2').text().trim(); 
         expect( textoParrafo ).toBe( `${valor - 1}` ); 
     })
@@ -354,7 +365,7 @@ describe('Prueba en <Counter app />', () => {
        wrapSH.find('button').at(0).simulate('click'); 
        wrapSH.find('button').at(0).simulate('click'); 
        let textoParrafo = wrapSH.find('h2').text().trim(); 
-       wrapSH.find('button').at(1).simulate('click'); 
+       wrapSH.find('button').at(1).simulate('click');   //el segundo boton es el reset
        console.log(textoParrafo); 
        textoParrafo = wrapSH.find('h2').text().trim(); 
         console.log(textoParrafo); 
