@@ -13,7 +13,7 @@
 |alt  down or up arrow |you move the current line or lines up or down |
 |alt shift down or up|copy the line up or down   |
 |ctrl alt shift down or up |you can modify more than one line at once |
-|ctrl u |Select next coincidence |
+|ctrl d |Select next coincidence |
 |ctrl shift l  |Select all the coincidence |
 
 ## Auto complete 
