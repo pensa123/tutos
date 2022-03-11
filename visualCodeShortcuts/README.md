@@ -18,6 +18,17 @@
 
 ## Auto complete 
 
+Maybe you will need some extensions to use the auto complete 
+The extensions i have installed are: 
+* https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets
+* https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag
+* https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag
+* https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer
+* https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
+* https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+* https://marketplace.visualstudio.com/items?itemName=TabNine.tabnine-vscode
+* https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense
+
 ### HTML 
 |Shortcut | Result | 
 |----|----|
@@ -28,5 +39,7 @@
 |Shortcut | Result | 
 |----|----|
 | impr | importa react |
+| impt | importa prop-types |
 | rafcp | Create a prototype | 
+| rfce | Create an export a function  | 
  
