@@ -75,3 +75,137 @@ It helps to inspect the code and watch the process but doesn't allow breakpoints
 ### node --inspect-bkr app.js
 
 It helps to inspect the code and watch the process but it allows breakpoints
+
+
+
+## Types 
+
+On javascript there are many types like 
+
+- Null: null
+- Undefined: undefined
+- Number: 1, 1.5, -1, NaN
+- String: "string", 'string', \`string \`
+- Boolean: true | false
+
+
+## Functions
+
+In javascript a function is also a value, and can be assign and use as others values 
+
+```
+function factory () {
+  return function doSomething () {}
+}
+```
+
+A funtion can be passed as a parameter 
+
+`setTimeout(function () { console.log('hello from the future') }, 100)`
+
+A function can be assigned to an object:
+
+```
+const obj = { id: 999, fn: function () { console.log(this.id) } }
+obj.fn() // prints 999
+```
+
+It's crucial to understand that this refers to the object on which the function was called, not the object which the function was assigned to:
+
+```
+const obj = { id: 999, fn: function () { console.log(this.id) } }
+const obj2 = { id: 2, fn: obj.fn }
+obj2.fn() // prints 2
+obj.fn() // prints 999
+```
+
+While normal functions have a prototype property (which will be discussed in detail shortly), fat arrow functions do not:
+
+```
+function normalFunction () { }
+const fatArrowFunction = () => {}
+console.log(typeof normalFunction.prototype) // prints 'object'
+console.log(typeof fatArrowFunction.prototype) // prints 'undefined'
+```
+
+# Prototype inherit funtional 
+
+There are many approaches and variations to creating a prototype chain in JavaScript but we will explore three common approaches: 
+
+- functional
+- constructor functions
+- class-syntax constructors.
+
+```
+const wolf = {
+  howl: function () { console.log(this.name + ': awoooooooo') }
+}
+
+const dog = Object.create(wolf, {
+  woof: { value: function() { console.log(this.name + ': woof') } }
+})
+
+const rufus = Object.create(dog, {
+  name: {value: 'Rufus the dog'}
+})
+
+rufus.woof() // prints "Rufus the dog: woof"
+rufus.howl() // prints "Rufus the dog: awoooooooo"
+
+console.log(Object.getPrototypeOf(rufus) === dog) //true
+console.log(Object.getPrototypeOf(dog) === wolf) //true
+```
+
+- the prototype of `rufus` is `dog`
+- the prototype of `dog` is `wolf`
+- the prototype of `wolf` is `Object.prototype`
+
+
+
+```
+class Wolf {
+  constructor (name) {
+    this.name = name
+  }
+  howl () { console.log(this.name + ': awoooooooo') }
+}
+
+class Dog extends Wolf {
+  constructor(name) {
+    super(name + ' the dog')
+  }
+  woof () { console.log(this.name + ': woof') }
+}
+
+const rufus = new Dog('Rufus')
+
+rufus.woof() // prints "Rufus the dog: woof"
+rufus.howl() // prints "Rufus the dog: awoooooooo"
+
+// This will setup the same prototype chain as in the Functional Prototypal Inheritance and the Function Constructors Prototypal Inheritance examples:
+
+console.log(Object.getPrototypeOf(rufus) === Dog.prototype) //true
+console.log(Object.getPrototypeOf(Dog.prototype) === Wolf.prototype) //true
+```
+
+
+```
+class Wolf {
+  constructor (name) {
+    this.name = name
+  }
+  howl () { console.log(this.name + ': awoooooooo') }
+}
+
+// This is desugared to:
+
+function Wolf (name) {
+  this.name = name
+}
+
+Wolf.prototype.howl = function () {
+ console.log(this.name + ': awoooooooo')
+}
+
+```
+
